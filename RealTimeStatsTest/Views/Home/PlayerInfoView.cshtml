@@ -1,0 +1,36 @@
+﻿@model List<BrowserTest.Models.PlayerInfo>
+<div class="innerRow">
+    <ul class="playersList">
+
+        @foreach (var pi in Model)
+        {
+         
+                var teamClassName = "team" + pi.team;
+                
+            <li class="player @teamClassName">
+                <ul class="playerInfoList">
+                    <li class="playername">
+                        @if (!string.IsNullOrEmpty(pi.name))
+                        {
+                            @pi.name
+                        }
+                        else
+                        {
+                            <span> &lt;Blank Name wtf?&gt;</span>
+                        }
+                    </li>
+                    <li class="playerscore">@pi.score</li>
+                    <li class="playerkills">@pi.kills</li>
+                    <li class="playerdeaths">@pi.deaths</li>
+                    <li class="playerassists">@pi.assists</li>
+                    <li class="playerDead">
+                        @if (!pi.isAlive)
+                        {
+                            <span>X</span>
+                        }
+                    </li>
+                </ul>
+            </li>
+        }
+    </ul>
+</div>

@@ -1,0 +1,172 @@
+﻿@using RealTimeStatsTest.Models.Ext
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HaloOnline ADSB</title>
+    @Styles.Render("~/Content/css")
+    @if (IsSectionDefined("AddToCSS"))
+    {
+        @RenderSection("AddToCSS");
+    }
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <link href="@Ext.GetContent("Base.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/scripts/jquery.signalR-2.2.0.min.js")"></script>
+    <script src="~/signalr/hubs"></script>
+    <script src="@Ext.GetScript("handlebars-v3.0.3.js")"></script>
+    <script src="@Ext.GetScript("dewRcon.js")"></script>
+    <script>
+        $(function () {
+            StartRconConnection();
+            $("div#rowContainer").on("click", "li.refreshIcon > span",  function() {
+                $(this).toggleClass("stop");
+                $(this).closest(".row").toggleClass("noRefresh");
+            });
+            
+            $("div#rowContainer").on("click", "a.serverAnchor", function () {
+                
+                var ip = $(this).html();
+                console.log(ip);
+                dewRcon.send("connect " + ip, function (res) {
+                    console.log("Connection",res);
+                });
+                return false;
+            });
+            Handlebars.registerHelper('isTeamGame', function (team) {
+                if (team) {
+                    return "team";
+                }
+            });
+            Handlebars.registerHelper('isPassworded', function(passworded) {
+                if (passworded) {
+                    return "passworded";
+                }
+            });
+            var updaterHub = $.connection.updaterHub;
+            updaterHub.client.updateHeaders = function (playerCount, serverCount) {
+                // console.log(playerCount, serverCount, killCount);
+                $("#totalPlayers").html(playerCount);
+                $("#totalServers").html(serverCount);
+            }
+            updaterHub.client.addOrUpdateServer = function (serverObj) {
+                // console.log(serverObj);
+                var id = serverObj.id;
+                var id_el = "#" + id;
+                if (!$(id_el).hasClass("noRefresh")) {
+                    if ($(id_el).length === 0) {
+                        var source = $("#serverInfo-template").html();
+                        var template = Handlebars.compile(source);
+                        var html = template(serverObj);
+                        var parsed = $.parseHTML(html);
+                        $("#rowContainer").append(parsed);
+                        //console.log(serverObj);
+                        if (serverObj.serverInfo.passworded) {
+                            $(id_el + " li.passworded").show();
+                        } else {
+                            $(id_el + " li.passworded").hide();
+                        }
+                        console.log("adding", id);
+                    } else {
+                        var source = $("#playerInfo-template").html();
+                        var template = Handlebars.compile(source);
+                        var html = template(serverObj);
+                        $(id_el + " div.innerRowContainer").replaceWith(html);
+                        //and other things
+                        var status = serverObj.serverInfo.status;
+                        var servername = serverObj.serverInfo.serverName;
+                        var gameVariant = serverObj.serverInfo.variant;
+                        var numPlayers = serverObj.serverInfo.numPlayers;
+                        var maxPlayers = serverObj.serverInfo.maxPlayers;
+                        var variantType = serverObj.serverInfo.variantType;
+                        var map = serverObj.serverInfo.map;
+                        var mapFile = serverObj.serverInfo.mapFile;
+
+
+                        var passworded = serverObj.serverInfo.passworded;
+
+                        //TODO: 
+                        //one of the problems is that during html updates, you can lose 
+                        //highlight focus...it's not preventable but we can reduce it by
+                        //checking if they have changed, then update
+
+                        //will host ever change their name midhosting?
+
+                        $(id_el).removeClass("InGame").removeClass("Loading").removeClass("InLobby");
+
+                        $(id_el).addClass(status);
+                        $(id_el).attr("title", status);
+                        $(id_el + " li.servername").html(servername);
+                        $(id_el + " li.gameVariant").html(gameVariant);
+                        $(id_el + " span.numPlayers").html(numPlayers);
+                        $(id_el + " span.maxPlayers").html(maxPlayers);
+
+                        $(id_el + " span.variantType").html(variantType);
+                        $(id_el + " span.map").html(map);
+                        $(id_el + " span.mapFile").html(mapFile);
+                        if (passworded) {
+                            $(id_el + " li.passworded").show();
+                        } else {
+                            $(id_el + " li.passworded").hide();
+                        }
+                        //var inner = $(html).html();
+                        //console.log("update", id);
+                        //$(id_el).html(inner);
+                    }
+                }
+               
+                
+
+                //console.log("Received",id,server, serverObj);
+            }
+            updaterHub.client.removeServer = function (id) {
+                $("#" + id).remove();
+                console.log("removing", id);
+            }
+            $.connection.hub.start().done(function () {
+
+                //updatehHub.server.hello();
+            });
+        });
+    </script>
+    @if (IsSectionDefined("AddToJS"))
+    {
+        @RenderSection("AddToJS");
+    }
+</head>
+<body>
+    <div id="sepBG">
+        <div id="back1">&nbsp;</div>
+        <div id="back2">&nbsp;</div>
+        <div id="backdrop">&nbsp;</div>
+    </div>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+
+                @Html.ActionLink("Another Server Browser", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="#"><span id="totalPlayers"></span> Players</a></li>
+                    <li><a href="#"><span id="totalServers"></span> servers</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content content">
+
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

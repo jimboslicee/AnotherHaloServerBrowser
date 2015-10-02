@@ -1,0 +1,53 @@
+﻿@using BrowserTestOnServerMVC.Models.Ext
+@model KeyValuePair<string, BrowserTestOnServerMVC.Models.ServerInfo>
+
+@{
+    var kvp = Model;
+    var server = kvp.Value; }
+<div class="row @server.status" id="@kvp.Value.xnkid">
+
+    <ul class="serverInfo">
+        @if (server.passworded)
+        {
+            <li class="serverpassworded">X</li>
+        }
+        <li class="servername">@server.name</li>
+        <li class="serverhost">by @server.hostPlayer</li>
+        <li class="serverip"><a href="dorito://@kvp.Key">@kvp.Key</a></li>
+        
+
+    </ul>
+    <div class="moreserverinfo">
+        <ul class="otherserverinfolist">
+            <li class="numPlayersContainer"><span class="numPlayers">@server.numPlayers</span> / @server.maxPlayers</li>
+            <li class="elVersion">@kvp.Value.eldewritoVersion</li>
+            @{
+                var jsonView = "http://" + kvp.Key;
+            }
+            <li class="debug"> <a href="@jsonView">Debug - View JSON</a></li>
+        </ul>
+    </div>
+    @if (kvp.Value.players != null)
+    {
+        
+            var teamClass= "";
+            var ingameClass = "";
+            if (kvp.Value.normalTeamGame)
+            {
+                teamClass += "team";
+            }
+            if (kvp.Value.status.Equals("InGame"))
+            {
+                ingameClass  += "InGame";
+            }
+        
+        <div class="innerRowContainer">
+
+
+
+        </div>
+
+
+    }
+
+</div>

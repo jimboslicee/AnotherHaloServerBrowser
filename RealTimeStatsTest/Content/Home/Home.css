@@ -1,0 +1,238 @@
+﻿html, body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+body {
+     background-color: black;
+    margin: 0 auto;
+    max-width: 1630px;
+    min-width: 960px;
+}
+div.content {
+    min-width: 960px !important;
+    width: 960px;
+    padding-top: 3em;
+    padding-left: 0;
+}
+div#sepBG {
+    position: fixed;
+    z-index: -1;
+    margin: 0 auto;
+    width: 100%;
+     min-width: 960px;
+     max-width: 1600px; 
+    height: 100%;
+}
+div#back1, div#back2 {
+    z-index: -2;
+    position: fixed;
+    height: 100%;
+    background-size: cover;
+}
+div#back1 {
+     background: url("../bg.jpg") no-repeat;
+     
+    background-position: -400px 0px;
+    width: 325px;
+      position: absolute;
+  
+}
+div#back2 {
+     background: url("../bg.jpg") no-repeat;
+    background-position: -950px 0px;
+    width: 350px;
+    height: 100%;
+    right: -30px;
+    
+     position: absolute;
+}
+div#backdrop {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.65);
+    z-index: -1;
+    position: fixed;
+}
+div#rowContainer {
+    background-color: black;
+    padding: 1em 1em;
+    /*height: 100%;*/
+}
+
+div.row {
+    background-color: rgba(255,255,255,0.33);
+    margin: 1em 0;
+    color: white;
+}
+
+
+
+ul.miscInfo >li {
+    display: inline-block;
+}
+div.row:hover {
+     background-color: rgba(255,255,255,0.4);
+}
+
+div.row.InGame > ul.serverInfo {
+    background-color: rgba(0, 255, 0, 0.3);
+   
+}
+div.row.Loading > ul.serverInfo, div.row.Loading >div.bottomRow {
+    background-color: rgba(255, 106, 0,0.7);
+}
+
+div.bottomRow {
+    bottom: 0;
+    position: relative;
+    clear: both;
+     background-color: rgba(0, 0, 0, 0.33);
+    padding: .5em 0;
+}
+
+ul.miscInfo {
+     margin-bottom: 0;
+    list-style-type: none;
+    text-align: right;
+}
+ul.miscInfo > li {
+    padding:0 1em;
+}
+ul.miscInfo > li.debug > a{
+    color: white;
+}
+ul.serverInfo {
+    list-style-type: none;
+    background-color: rgba(0, 0, 0, 0.33);
+    padding: .5em 1em;
+    text-align: right;
+}
+
+ul.serverInfo > li {
+   
+    display: inline;
+   padding-left: 1em;
+}
+
+ul.serverInfo > li.refreshIcon >span {
+    -webkit-animation:spin 3s linear infinite;
+    -moz-animation:spin 3s linear infinite;
+    animation:spin 3s linear infinite;
+    -webkit-transform-origin: 50%  51%;
+    cursor: pointer;
+
+}
+ul.serverInfo > li.refreshIcon >span.stop {
+    -webkit-animation-play-state:paused;
+    -moz-animation-play-state:paused;
+    -o-animation-play-state:paused; 
+    animation-play-state:paused;
+}
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+ul.serverInfo > li.servername {
+    text-overflow: ellipsis;
+    width: 60%;
+    overflow: hidden;
+    white-space: nowrap;
+    /*This is needed*/
+    text-align: left;
+}
+ul.serverInfo > li.servername, li.passworded {
+    float: left;
+    
+}
+
+ul.serverInfo > li.serverip > a {
+    color: white;
+}
+ul.otherserverinfolist {
+    list-style-type: none;
+
+}
+
+div.moreserverinfo {
+    float: left;
+    width: 27%;
+}
+ul.playersList {
+    list-style-type: none;
+    width: 550px;
+    overflow: hidden;
+    padding: 0;
+}
+
+ul.playersList > li.player {
+    float: left;
+    overflow: hidden;
+    
+    clear: both;
+    width: 100%;
+    font-weight: bold;
+    padding:0.25em .5em
+}
+/*div.innerRowContainer.InGame.team ul.playersList > li.player {
+    color: white;
+    
+    
+}*/
+
+.innerRowContainer ul.playersList > li.player {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+div.innerRowContainer.InGame.team ul.playersList > li.player.team0 {
+    background-color: rgba(192, 32, 32, 0.5);
+}
+div.innerRowContainer.InGame.team ul.playersList > li.player.team1 {
+    background-color: rgba(64, 64, 192, 0.5);
+}
+ul.playersList > li.player.header{
+    border-bottom: 1px solid gray;
+    padding-top: .55em;
+    background-color:rgba(0,0,0,0.5);
+}
+/*.playerscore, li.playerkills, li.playerdeaths, li.playerassists */
+ul.playerInfoList {
+    float: left;
+    width: 100%;
+    position: relative;
+    /* overflow: hidden; */
+}
+ul.playerInfoList > li {
+     display: inline;
+    float: left;
+    text-align: right;
+}
+ul.playerInfoList > li:not(.playername) {
+   
+    /*float: left;*/
+    width: 12%;
+}
+
+ul.playerInfoList > li.playerDead {
+    width: 6%;
+    float: left;
+    left: 15em;
+    position: absolute;
+}
+
+ul.playerInfoList > li.playername {
+    width: 40%;
+    padding-right: 1em;
+}
+
+
+
+div.innerRowContainer {
+    float: left;
+    display: block;
+    overflow: auto;
+      /*height: 350px;*/
+    overflow: hidden;
+    /*overflow-y: scroll;*/
+    /* width: 80%; */
+    margin-bottom: 0em;
+}
+

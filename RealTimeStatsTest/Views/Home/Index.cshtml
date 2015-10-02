@@ -1,0 +1,170 @@
+﻿@using RealTimeStatsTest.Models.Ext
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section AddToCSS{
+    <link rel="stylesheet" href="@Ext.GetContent("Home/home.css")" />
+}
+@section AddToJS{
+    <script id="serverInfo-template" type="text/x-handlebars-template">
+        <div class="row {{serverInfo.status}}" id="{{id}}" title="{{serverInfo.status}}">
+            <ul class="serverInfo">
+                <li class="passworded"><span class="glyphicon glyphicon-lock"></span></li>
+
+                <li class="servername">{{serverInfo.name}}</li>
+                <li class="gameVariant">{{serverInfo.variant}}</li>
+                @*<li class="serverhost">{{serverInfo.hostPlayer}}</li>*@
+                <li class="serverip">
+                    <a class="serverAnchor" href="#">{{server}}</a>
+                </li>
+                <li class="refreshIcon"><span class="glyphicon glyphicon-refresh"></span></li>
+                <li class="moreInfoButton"><a href="#"><span class="glyphicon glyphicon-menu-hamburger"></span></a></li>
+            </ul>
+            <div class="moreserverinfo">
+                <ul class="otherserverinfolist">
+
+                    <li class="serverHost">{{serverInfo.hostPlayer}}</li>
+                    <li class="numPlayersContainer"><span class="numPlayers">{{serverInfo.numPlayers}}</span> / <span class="maxPlayers">{{serverInfo.maxPlayers}}</span></li>
+                    <li class="variantType"><span class="variantType">{{serverInfo.variantType}}</span> on <span class="map">{{serverInfo.map}}</span> (<span class="mapFile">{{serverInfo.mapFile}}</span>)</li>
+
+                </ul>
+            </div>
+
+            <div class="innerRowContainer {{serverInfo.status}} {{isTeamGame serverInfo.normalTeamGame}}">
+                <div class="innerRow">
+                    <ul class="playersList">
+                        {{#unless serverInfo.passworded}}
+                        <li class="player header">
+
+                            <ul class="playerInfoList">
+                                <li class="playername">
+                                    Player Name
+                                </li>
+                                <li class="playerscore">
+                                    Score
+
+                                </li>
+                                <li class="playerkills">
+                                    Kills
+                                </li>
+                                <li class="playerdeaths">
+                                    Deaths
+                                </li>
+                                <li class="playerassists">Assists</li>
+                            </ul>
+                        </li>
+                        {{/unless}}
+                        {{#each serverInfo.players}}
+                        <li class="player team{{this.team}}">
+                            <ul class="playerInfoList">
+                                <li class="playername">
+
+                                    {{#if this.name}}
+                                    {{this.name}}
+                                    {{else}}
+                                    <span> &lt;Blank Name?&gt;</span>
+                                    {{/if}}
+
+                                </li>
+                                <li class="playerDead">
+                                    {{#if this.isAlive}}
+                                    &nbsp;
+                                    {{else}}
+                                    <span>X</span>
+                                    {{/if}}
+
+                                </li>
+                                <li class="playerscore">{{this.score}}</li>
+                                <li class="playerkills">{{this.kills}}</li>
+                                <li class="playerdeaths">{{this.deaths}}</li>
+                                <li class="playerassists">{{this.assists}}</li>
+
+                            </ul>
+                        </li>
+                        {{else}}
+                        <li class="player" style="text-align:center;">Game Passworded</li>
+                        {{/each}}
+
+                    </ul>
+                </div>
+            </div>
+            <div class="bottomRow">
+                <ul class="miscInfo">
+                    <li class="elVersion">{{serverInfo.eldewritoVersion}}</li>
+
+                    <li class="debug"> <a href="http://{{server}}">Debug - View JSON</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </script>
+
+    <script id="playerInfo-template" type="text/x-handlebars-template">
+        <div class="innerRowContainer {{serverInfo.status}} {{isTeamGame serverInfo.normalTeamGame}}">
+            <div class="innerRow">
+                <ul class="playersList">
+                    {{#unless serverInfo.passworded}}
+                    <li class="player header">
+
+                        <ul class="playerInfoList">
+                            <li class="playername">
+                                Player Name
+                            </li>
+                            <li class="playerscore">
+                                Score
+
+                            </li>
+                            <li class="playerkills">
+                                Kills
+                            </li>
+                            <li class="playerdeaths">
+                                Deaths
+                            </li>
+                            <li class="playerassists">Assists</li>
+                        </ul>
+                    </li>
+                    {{/unless}}
+                    {{#each serverInfo.players}}
+                    <li class="player team{{this.team}}">
+                        <ul class="playerInfoList">
+                            <li class="playername">
+
+                                {{#if this.name}}
+                                {{this.name}}
+                                {{else}}
+                                <span>Nameless Player</span>
+                                @*<span> &lt;Blank Name???&gt;</span>*@
+                                {{/if}}
+
+                            </li>
+                            <li class="playerDead">
+                                {{#if this.isAlive}}
+                                &nbsp;
+                                {{else}}
+                                <span>X</span>
+                                {{/if}}
+
+                            </li>
+                            <li class="playerscore">{{this.score}}</li>
+                            <li class="playerkills">{{this.kills}}</li>
+                            <li class="playerdeaths">{{this.deaths}}</li>
+                            <li class="playerassists">{{this.assists}}</li>
+
+                        </ul>
+                    </li>
+                    {{else}}
+                    <li class="player" style="text-align:center;">Game Passworded</li>
+                    {{/each}}
+
+                </ul>
+            </div>
+        </div>
+
+    </script>
+}
+
+
+<div id="rowContainer">
+</div>
+

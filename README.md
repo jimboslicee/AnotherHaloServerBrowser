@@ -1,11 +1,16 @@
 # AnotherHaloServerBrowser
 Using the unofficical Halo Online game, this server browser displays all servers and player stats in ASP.NET and SignalR
 
-Viewable on [dew.jimmyli.co](http://dew.jimmyli.co)
+**NOTE: THERE MAY BE OFFENSIVE NAMES AND WORDS ON THIS WEB APP.**
 
-This project uses SignalR. It is used to delegate all updates on the backend rather than the client polling at an interval for updates.
+**I AM NOT RESPONSIBLE FOR THEIR CONTENT AS IT IS USER GENERATED**
+
+Project is live on [dew.jimmyli.co](http://dew.jimmyli.co)
+
 
 # How It Works
+
+This project uses SignalR. It is used to delegate all updates on the backend rather than the client polling at an interval for updates.
 
 The devs from the unofficial Halo Online game have a backend that act as a master server list containing all the host's servers. 
 

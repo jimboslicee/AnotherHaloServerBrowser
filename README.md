@@ -1,5 +1,5 @@
 # AnotherHaloServerBrowser
-Using the unofficical Halo Online game, this server browser displays all servers and player stats in ASP.NET and SignalR
+Hosted on AWS and using the unoffical Halo Online game, this server browser displays all servers and player stats in ASP.NET and SignalR.
 
 **NOTE: THERE MAY BE OFFENSIVE NAMES AND WORDS ON THIS WEB APP.**
 
@@ -10,13 +10,13 @@ Project is live on [dew.jimmyli.co](http://dew.jimmyli.co)
 
 # How It Works
 
-This project uses SignalR. It is used to delegate all updates on the backend rather than the client polling at an interval for updates.
+I wanted to play with SignalR and this project idea came from that desire. It is used to delegate all updates on the backend rather than the client polling at an interval. It makes sense because the client will not be acting as an active user requesting data from an API, rather they are a passive user taking in all the info the server gives them.
 
-The devs from the unofficial Halo Online game have a backend that act as a master server list containing all the host's servers. 
+The community devs from the unofficial Halo Online game have a backend that act as a master server list containing all the host's servers. 
 
 This application will ping that master server list for a JSON response every 30 seconds (to avoid flooding) and update the server list held in cache. Servers are also removed when differences are compared. (A foreseeable issue is that a closed server will continue to be present for another 30 seconds)
 
-In each JSON response is a string array of IP addresses of servers being hosted.
+Each JSON response is a string array of IP addresses of servers being hosted.
 
 Example (these should not be real host IP addresses, any actual connection made is a coincidence):
 ```
@@ -91,9 +91,9 @@ This is then saved into cache (server ip:json response key value pair) and every
 
 # Plans
 
-This is a prototype. The code structure is a bit of a mess and I have plans to improve ...well everything. I plan on rebuilding it with an API, a better UI, non-hardcoded master server URLs, and definitely a better persistence model (either redis or memcached) rather than the built-in MemoryCache (it's still good, but there are better ones). 
+This is a prototype. The code structure is a bit of a mess and I have plans to improve ...well everything. I plan on rebuilding it with an API (sorted server list), a better UI, non-hardcoded master server URLs, and definitely a better persistence model (either redis or memcached) rather than the built-in MemoryCache (it's still good, but there are better ones). 
 
-Hubs and worker timer threads will be distinctly defined for each operation:
+Hubs and timer threads will be distinctly defined for each operation:
 
 * Fetching the master server list
 * Adding each server to the cache

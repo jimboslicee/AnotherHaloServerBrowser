@@ -5,8 +5,7 @@ Hosted on AWS and using the unoffical Halo Online game, this server browser disp
 
 **I AM NOT RESPONSIBLE FOR THEIR CONTENT AS IT IS USER GENERATED**
 
-Project is live on [dew.jimmyli.co](http://dew.jimmyli.co)
-
+Project is no longer live nor maintained
 
 # How It Works
 

@@ -1,11 +1,14 @@
-# AnotherHaloServerBrowser
+# [Deprecated] AnotherHaloServerBrowser
+
+**Halo MCC is available on PC, go knock your socks off!**
+
 Hosted on AWS and using the unoffical Halo Online game, this server browser displays all servers and player stats in ASP.NET and SignalR.
 
 **NOTE: THERE MAY BE OFFENSIVE NAMES AND WORDS ON THIS WEB APP.**
 
 **I AM NOT RESPONSIBLE FOR THEIR CONTENT AS IT IS USER GENERATED**
 
-Project is no longer live nor maintained
+**Project is no longer live nor maintained**
 
 # How It Works
 
